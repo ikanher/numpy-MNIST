@@ -18,39 +18,54 @@ class Linear(object):
     def forward(self, x):
         """
         Calculates the forward pass, which is just matrix matrix product
-        of weights added with bias: y = xA' + b
+        of weights added with bias:  y = xA' + b
         """
         x = (x @ self.weights.T) + self.bias
         return x
 
-    def backward(self, x):
+    def backward(self, x, grad_output):
         """
-        Calculates linear weights derivative
+        Calculates linear layer derivative
 
-        TBD
         """
-        return
+        grad_weights = (x.T @ grad_output) / x.shape[0]
+        grad_bias = np.sum(grad_output, axis=0)
+
+        return grad_weights, grad_bias
 
 class Softmax(object):
     """
     Softmax layer
     """
-
     def forward(self, x):
         """
         Calculates Softmax
 
         https://en.wikipedia.org/wiki/Softmax_function
         """
-        return np.exp(x)/np.sum(np.exp(x))
+        softmax = np.exp(x)/np.sum(np.exp(x), axis=1, keepdims=True)
+        return softmax
 
-    def backward(self, x):
+    def forward_stable(self, x):
         """
-        Softmax derivative
+        Calculates Softmax
 
-        TBD
+        https://en.wikipedia.org/wiki/Softmax_function
         """
-        return
+        z = x - np.max(x, axis=1, keepdims=True)
+        exp_z = np.exp(z)
+        softmax = exp_z/np.sum(exp_z, axis=1, keepdims=True)
+        return softmax
+
+    def backward(self, predictions, y):
+        """
+        Cross-Entropy Softmax gradient
+        """
+        k = predictions.shape[0]
+        grad = predictions
+        grad[range(k), y] -= 1
+
+        return grad
 
     def cross_entropy(self, y_pred, y):
         """
@@ -58,6 +73,5 @@ class Softmax(object):
 
         https://en.wikipedia.org/wiki/Cross_entropy
         """
-        out = np.diag(y_pred[:,y])
-        return -np.mean(np.log(out))
-
+        predictions = np.diag(y_pred[:,y])
+        return -np.mean(np.log(predictions))
