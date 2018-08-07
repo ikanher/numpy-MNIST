@@ -69,12 +69,3 @@ class Softmax(object):
         grad = grad/k
 
         return grad
-
-    def cross_entropy(self, y_pred, y):
-        """
-        Calculates Cross-Entropy Loss
-
-        https://en.wikipedia.org/wiki/Cross_entropy
-        """
-        predictions = np.diag(y_pred[:,y])
-        return -np.mean(np.log(predictions))
