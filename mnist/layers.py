@@ -60,10 +60,13 @@ class Softmax(object):
     def backward(self, predictions, y):
         """
         Cross-Entropy Softmax gradient
+
+        https://deepnotes.io/softmax-crossentropy
         """
         k = predictions.shape[0]
         grad = predictions
         grad[range(k), y] -= 1
+        grad = grad/k
 
         return grad
 
