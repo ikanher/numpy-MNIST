@@ -9,34 +9,41 @@ class Linear(object):
     """
 
     def __init__(self, n_input, n_output):
+        self.n_input = n_input
+        self.n_output = n_output
         self.weights = self._create_weights(n_input, n_output)
         self.bias = self._create_weights(n_output)
 
     def _create_weights(self, *dims):
-        return (np.random.randn(*dims)/dims[0]).T
+        return np.random.randn(*dims)/dims[0]
+
+    def _create_weights_xavier(self, *dims):
+        return np.random.randn(*dims).T / np.sqrt(dims[0] / 2.)
 
     def forward(self, x):
         """
         Calculates the forward pass, which is just matrix matrix product
         of weights added with bias:  y = xA' + b
         """
-        x = (x @ self.weights.T) + self.bias
+        self.x = x
+        x = (x @ self.weights) + self.bias
         return x
 
-    def backward(self, x, grad_output):
+    def backward(self, grad_output):
         """
-        Calculates linear layer derivative
-
+        Calculates linear layer gradients
         """
-        grad_weights = (x.T @ grad_output) / x.shape[0]
+        grad_x = grad_output @ self.weights.T
+        grad_weights = (self.x.T @ grad_output)
         grad_bias = np.sum(grad_output, axis=0)
 
-        return grad_weights, grad_bias
+        return grad_x, grad_weights, grad_bias
 
 class Softmax(object):
     """
     Softmax layer
     """
+
     def forward(self, x):
         """
         Calculates Softmax
@@ -48,9 +55,7 @@ class Softmax(object):
 
     def forward_stable(self, x):
         """
-        Calculates Softmax
-
-        https://en.wikipedia.org/wiki/Softmax_function
+        Calculates numerically stable softmax
         """
         z = x - np.max(x, axis=1, keepdims=True)
         exp_z = np.exp(z)
@@ -68,4 +73,42 @@ class Softmax(object):
         grad[range(k), y] -= 1
         grad = grad/k
 
+        return grad
+
+class Dropout(object):
+    """
+    Dropout layer
+
+    https://deepnotes.io/dropout
+    """
+
+    def __init__(self, p=0.5):
+        """
+        p is the probability of dropping inputs
+        """
+        self.p = 1 - p
+        self.mask = None
+
+    def forward(self, x):
+        self.mask = np.random.binomial(1, self.p, size=x.shape) / self.p
+        return x * self.mask
+
+    def backward(self, grad_output):
+        # dropout doesn't need to anything as the dropped weights are
+        # dead and don't contribute to the gradient
+        return grad_output
+
+
+class ReLU:
+    """
+    ReLU (Rectified Linear Unit) layer
+
+    https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
+    """
+    def forward(self, x):
+        out = x[x > 0]
+        return out
+
+    def backward(self, predictions, grad_output):
+        grad = 1.0 * (predictions > 0) * grad_output
         return grad
