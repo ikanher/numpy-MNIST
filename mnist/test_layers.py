@@ -42,6 +42,9 @@ class TestLinear(unittest.TestCase):
         Test backpropagation using gradient checking
         """
 
+        # error tolerance
+        epsilon = 1e-12
+
         inputs = np.random.randn(10, 6)
         weights = np.random.randn(6, 5)
         bias = np.random.randn(5)
@@ -61,9 +64,9 @@ class TestLinear(unittest.TestCase):
 
         grad_inputs, grad_weights, grad_bias = linear.backward(grad_output)
 
-        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical), msg="Linear grad_inputs has errors")
-        self.assertTrue(np.allclose(grad_weights, grad_weights_numerical), msg="Linear grad_weights has errors")
-        self.assertTrue(np.allclose(grad_bias, grad_bias_numerical), msg="Linear grad_bias has errors")
+        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="Linear grad_inputs has errors")
+        self.assertTrue(np.allclose(grad_weights, grad_weights_numerical, rtol=epsilon), msg="Linear grad_weights has errors")
+        self.assertTrue(np.allclose(grad_bias, grad_bias_numerical, rtol=epsilon), msg="Linear grad_bias has errors")
 
 class TestSoftmax(unittest.TestCase):
     """
@@ -91,6 +94,9 @@ class TestSoftmax(unittest.TestCase):
         Test backpropagation using gradient checking
         """
 
+        # error tolerance
+        epsilon = 1e-12
+
         n_inputs, n_classes = 20, 30
         inputs = np.random.randn(n_inputs, n_classes)
         targets = np.random.randint(n_classes, size=n_inputs)
@@ -105,7 +111,7 @@ class TestSoftmax(unittest.TestCase):
         predictions = self.softmax.forward(inputs)
         grad_inputs = self.softmax.backward(targets)
 
-        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical), msg="Softmax backward has errors")
+        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="Softmax backward has errors")
 
 class TestReLU(unittest.TestCase):
     """
@@ -130,6 +136,13 @@ class TestReLU(unittest.TestCase):
         self.assertFalse(output[output < 0].any(), msg="ReLU forward2 has errors")
 
     def test_backward(self):
+        """
+        Test backpropagation using gradient checking
+        """
+
+        # error tolerance
+        epsilon = 1e-12
+
         x = np.random.randn(3, 2, 8, 8)
         grad_output = np.random.randn(3, 2, 8, 8)
 
@@ -138,7 +151,7 @@ class TestReLU(unittest.TestCase):
         output = self.relu.forward(x)
         grad = self.relu.backward(grad_output)
 
-        self.assertTrue(np.allclose(grad, grad_numerical), msg="ReLU backward has errors")
+        self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="ReLU backward has errors")
 
 class TestDropout(unittest.TestCase):
     """
@@ -179,7 +192,7 @@ Gradient checking code from:
 cs231n.github.io/assignments2017/assignment1
 """
 
-def eval_numerical_gradient(f, x, verbose=True, h=0.00001):
+def eval_numerical_gradient(f, x, verbose=True, h=1e-5):
     """
     a naive implementation of numerical gradient of f at x
     - f should be a function that takes a single argument
