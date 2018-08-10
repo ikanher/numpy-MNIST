@@ -2,7 +2,7 @@ import dataloader
 import unittest
 import numpy as np
 
-from layers import Softmax, Linear, ReLU
+from layers import Softmax, Linear, ReLU, Dropout
 from losses import CrossEntropy
 
 class TestLinear(unittest.TestCase):
@@ -41,12 +41,13 @@ class TestLinear(unittest.TestCase):
         """
         Test backpropagation using gradient checking
         """
+
         inputs = np.random.randn(10, 6)
         weights = np.random.randn(6, 5)
         bias = np.random.randn(5)
         grad_output = np.random.randn(10, 5)
-
         linear = Linear(60, 5)
+
         linear.weights, linear.bias = weights, bias
 
         grad_inputs_numerical = eval_numerical_gradient_array(
@@ -123,10 +124,43 @@ class TestReLU(unittest.TestCase):
         output = self.relu.forward(data)
         self.assertFalse(output[output < 0].any(), msg="ReLU forward1 has errors")
 
-    def test_forward2(self):
+def test_forward2(self):
         data = np.random.randn(10, 10)
         output = self.relu.forward(data)
         self.assertFalse(output[output < 0].any(), msg="ReLU forward2 has errors")
+
+class TestDropout(unittest.TestCase):
+    """
+    Test Dropout layer functionality
+    """
+
+    def test_forward1(self):
+
+        # probability of dropping inputs
+        p = 0.7
+
+        data = np.random.randn(10, 50)
+        dropout = Dropout(p=p)
+        output = dropout.forward(data)
+
+        zeros = output[output == 0]
+        pct = zeros.size / data.size
+
+        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward1 has errors")
+
+    def test_forward2(self):
+
+        # probability of dropping inputs
+        p = 0.2
+
+        data = np.random.randn(40, 30)
+        dropout = Dropout(p=0.2)
+        output = dropout.forward(data)
+
+        zeros = output[output == 0]
+        pct = zeros.size / data.size
+
+        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward2 has errors")
 
 
 """
