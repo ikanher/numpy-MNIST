@@ -103,7 +103,7 @@ class TestSoftmax(unittest.TestCase):
         grad_inputs_numerical = eval_numerical_gradient(f, inputs, verbose=False)
 
         predictions = self.softmax.forward(inputs)
-        grad_inputs = self.softmax.backward(predictions, targets)
+        grad_inputs = self.softmax.backward(targets)
 
         self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical), msg="Softmax backward has errors")
 

@@ -51,25 +51,17 @@ class Softmax(object):
         https://en.wikipedia.org/wiki/Softmax_function
         """
         softmax = np.exp(x)/np.sum(np.exp(x), axis=1, keepdims=True)
+        self.previous = softmax
         return softmax
 
-    def forward_stable(self, x):
-        """
-        Calculates numerically stable softmax
-        """
-        z = x - np.max(x, axis=1, keepdims=True)
-        exp_z = np.exp(z)
-        softmax = exp_z/np.sum(exp_z, axis=1, keepdims=True)
-        return softmax
-
-    def backward(self, predictions, y):
+    def backward(self, y):
         """
         Cross-Entropy Softmax gradient
 
         https://deepnotes.io/softmax-crossentropy
         """
-        k = predictions.shape[0]
-        grad = predictions
+        grad = self.previous.copy()
+        k = grad.shape[0]
         grad[range(k), y] -= 1
         grad = grad/k
 
@@ -87,7 +79,6 @@ class Dropout(object):
         p is the probability of dropping inputs
         """
         self.p = 1 - p
-        self.mask = None
 
     def forward(self, x):
         self.mask = np.random.binomial(1, self.p, size=x.shape) / self.p
@@ -107,8 +98,9 @@ class ReLU:
     """
     def forward(self, x):
         out = x[x > 0]
+        self.previous = x
         return out
 
-    def backward(self, predictions, grad_output):
-        grad = 1.0 * (predictions > 0) * grad_output
+    def backward(self, grad_output):
+        grad = 1.0 * (self.previous > 0) * grad_output
         return grad
