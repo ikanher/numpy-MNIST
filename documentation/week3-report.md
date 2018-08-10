@@ -7,6 +7,7 @@
 * Implemented Dropout layer for regularization
 * Implemented ReLU (rectified linear unit) layer that is needed for non-linearity when adding hidden layer(s)
 * Added hidden layer to PyTorch implementation
+* **Last minute update** I found a bug in my Numpy notebook shuffling code, now finally getting results very similar to PyTorch notebook. Yay!
 
 ## How has the program progressed?
 Finally got backpropagation working! Also managed to implement tests for backward pass, using gradient checking.
