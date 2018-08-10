@@ -97,10 +97,10 @@ class ReLU:
     https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
     """
     def forward(self, x):
-        out = x[x > 0]
+        out = np.maximum(0, x)
         self.previous = x
         return out
 
     def backward(self, grad_output):
-        grad = 1.0 * (self.previous > 0) * grad_output
+        grad = (self.previous > 0) * grad_output
         return grad

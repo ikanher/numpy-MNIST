@@ -124,10 +124,21 @@ class TestReLU(unittest.TestCase):
         output = self.relu.forward(data)
         self.assertFalse(output[output < 0].any(), msg="ReLU forward1 has errors")
 
-def test_forward2(self):
+    def test_forward2(self):
         data = np.random.randn(10, 10)
         output = self.relu.forward(data)
         self.assertFalse(output[output < 0].any(), msg="ReLU forward2 has errors")
+
+    def test_backward(self):
+        x = np.random.randn(3, 2, 8, 8)
+        grad_output = np.random.randn(3, 2, 8, 8)
+
+        grad_numerical = eval_numerical_gradient_array(lambda x: self.relu.forward(x), x, grad_output)
+
+        output = self.relu.forward(x)
+        grad = self.relu.backward(grad_output)
+
+        self.assertTrue(np.allclose(grad, grad_numerical), msg="ReLU backward has errors")
 
 class TestDropout(unittest.TestCase):
     """
