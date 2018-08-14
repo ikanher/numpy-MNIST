@@ -32,8 +32,6 @@ class TwoLayerModel():
         """
         Returns a list of layers that make this model
         """
-        import numpy as np
-        np.random.seed(1)
         layers = []
         layers.append(Dropout(0.01))                            # regularization
         layers.append(Linear(self.n_input, self.n_hidden1))     # input layers
