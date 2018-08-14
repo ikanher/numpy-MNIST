@@ -32,6 +32,18 @@ Or if the above is not working, use:
 source activate mnist
 ```
 
+**If you already have an earlier version of Anaconda installed** you might have to install numpy and matplotlib separately. You can do it by saying
+
+```
+conda install numpy
+````
+
+And respectively
+
+```
+conda install matplotlib
+```
+
 ## You are ready!
 
 ### Train the network
