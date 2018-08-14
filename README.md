@@ -7,6 +7,7 @@ This repository is for Laboratory work for the course **Data structures and algo
 * [NumPy](http://www.numpy.org/)
 
 ## Documentation
+* [Getting started](documentation/getting-started.md)
 * [Specification](documentation/specification.md)
 
 ## Weekly reports
