@@ -1,8 +1,10 @@
-import dataloader
 import unittest
 import numpy as np
 
 from dataloader import DataLoader
+
+__author__ = 'Aki Rehn'
+__project__ = 'mnist'
 
 class TestDataLoader(unittest.TestCase):
     """
@@ -10,11 +12,11 @@ class TestDataLoader(unittest.TestCase):
     """
 
     def setUp(self):
-        self.dl = DataLoader()
+        self.loader = DataLoader()
         self.epsilon = 1e-6
 
     def test_load_data(self):
-        ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = self.dl.load_data()
+        ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = self.loader.load_data()
         self.assertEqual(x_train.shape, (50000, 784))
         self.assertEqual(y_train.shape, (50000,))
         self.assertEqual(x_valid.shape, (10000, 784))
@@ -23,8 +25,9 @@ class TestDataLoader(unittest.TestCase):
         self.assertEqual(y_test.shape, (10000,))
 
     def test_normalize(self):
-        ((x_train, y_train), (x_valid, y_valid), _) = self.dl.load_data()
-        ((x_train, y_train), (x_valid, y_valid)) = self.dl.normalize(((x_train, y_train), (x_valid, y_valid)))
+        ((x_train, y_train), (x_valid, y_valid), _) = self.loader.load_data()
+        ((x_train, y_train), (x_valid, y_valid)) = \
+                self.loader.normalize(((x_train, y_train), (x_valid, y_valid)))
+
         self.assertTrue(np.isclose(x_train.mean(), 0, atol=self.epsilon))
         self.assertTrue(np.isclose(x_train.std(), 1, atol=self.epsilon))
-

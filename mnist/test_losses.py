@@ -3,6 +3,9 @@ import numpy as np
 
 from losses import CrossEntropy
 
+__author__ = 'Aki Rehn'
+__project__ = 'mnist'
+
 class TestCrossEntropy(unittest.TestCase):
     """
     Test Cross-Entropy loss

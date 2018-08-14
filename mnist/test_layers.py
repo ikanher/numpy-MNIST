@@ -1,9 +1,11 @@
-import dataloader
 import unittest
 import numpy as np
 
 from layers import Softmax, Linear, ReLU, Dropout
 from losses import CrossEntropy
+
+__author__ = 'Aki Rehn'
+__project__ = 'mnist'
 
 class TestLinear(unittest.TestCase):
     """

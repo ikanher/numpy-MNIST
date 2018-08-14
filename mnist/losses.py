@@ -1,3 +1,7 @@
+"""
+Module contains loss functions to be used in a Neural Network
+"""
+
 __author__ = 'Aki Rehn'
 __project__ = 'mnist'
 
@@ -13,6 +17,5 @@ class CrossEntropy(object):
         """
         Calculates Cross-Entropy Loss
         """
-        predictions = np.diag(y_pred[:,y])
+        predictions = np.diag(y_pred[:, y])
         return -np.mean(np.log(predictions))
-
