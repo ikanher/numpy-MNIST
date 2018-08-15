@@ -49,10 +49,10 @@ class Linear(Layer):
         self.learning = True
         self.x = None
 
-    def _create_weights_orig(self, *dims):
+    def _create_weights(self, *dims):
         return np.random.randn(*dims)/dims[0]
 
-    def _create_weights(self, *dims):
+    def _create_weights_xavier(self, *dims):
         return np.random.randn(*dims) / np.sqrt(dims[0] / 2.)
 
     def forward(self, x):

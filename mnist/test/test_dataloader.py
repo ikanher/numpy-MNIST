@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from dataloader import DataLoader
+from mnist.dataloader import DataLoader
 
 __author__ = 'Aki Rehn'
 __project__ = 'mnist'

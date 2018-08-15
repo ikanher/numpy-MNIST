@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from losses import CrossEntropy
+from mnist.losses import CrossEntropy
 
 __author__ = 'Aki Rehn'
 __project__ = 'mnist'

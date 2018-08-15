@@ -9,16 +9,26 @@ from mnist.layers import Softmax
 from mnist.losses import CrossEntropy
 from mnist.models import TwoLayerModel
 
-weights_fname = 'data/saved_weights.dat'
+def print_set_accuracy(net, x, y, msg):
+    preds = net.forward(x)
+    accuracy = np.mean(preds.argmax(axis=1) == y)
+    print(msg, accuracy)
+
+weights_fname = '../data/saved_weights.dat'
 
 # create the model
-model = TwoLayerModel()
+#model = TwoLayerModel()
+model = TwoLayerModel(n_input=28*28, n_hidden1=256, n_hidden2=256, n_output=10)
 net = NeuralNet(model=model)
 net.load_weights(weights_fname)
 net.train = False
 
-(_, _, (x_test, y_test)) = dataloader.DataLoader('data/').load_data()
+((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = dataloader.DataLoader().load_data()
 test_images = np.reshape(x_test, (-1, 28, 28))
+
+print_set_accuracy(net, x_train, y_train, "Training set accuracy:")
+print_set_accuracy(net, x_valid, y_valid, "Validation set accuracy:")
+print_set_accuracy(net, x_test, y_test, "Test set accuracy:")
 
 while True:
     predictions = net.forward(x_test)
@@ -32,3 +42,4 @@ while True:
     plt.gray()
     plt.imshow(test_images[i])
     plt.show()
+
