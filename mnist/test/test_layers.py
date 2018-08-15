@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from mnist.layers import Softmax, Linear, ReLU, Dropout, ELU
+from mnist.layers import Softmax, Linear, ReLU, Dropout
 from mnist.losses import CrossEntropy
 
 __author__ = 'Aki Rehn'
@@ -154,51 +154,6 @@ class TestReLU(unittest.TestCase):
         grad = self.relu.backward(grad_output)
 
         self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="ReLU backward has errors")
-
-class TestELU(unittest.TestCase):
-    """
-    Test ELU functionality
-    """
-
-    def setUp(self):
-        alpha = 1.0
-        self.elu = ELU(alpha=alpha)
-
-    def test_forward1(self):
-        data = np.random.randn(5, 5)
-
-        # make sure at least one negative value exists
-        data[0, 0] = -5
-
-        output = self.elu.forward(data)
-        #self.assertFalse(output[output < 0].any(), msg="ELU forward1 has errors")
-        pass
-
-    def test_forward2(self):
-        data = np.random.randn(10, 10)
-        output = self.elu.forward(data)
-        #self.assertFalse(output[output < 0].any(), msg="ELU forward2 has errors")
-        pass
-
-    def test_backward(self):
-        """
-        Test backpropagation using gradient checking
-        """
-
-        # error tolerance
-        epsilon = 1e-12
-
-        x = np.random.randn(3, 2, 8, 8)
-        grad_output = np.random.randn(3, 2, 8, 8)
-
-        grad_numerical = eval_numerical_gradient_array(lambda x: self.elu.forward(x), x, grad_output)
-
-        output = self.elu.forward(x)
-        grad = self.elu.backward(grad_output)
-        print("grad_numerical", grad_numerical)
-        print("grad", grad)
-
-        self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="ELU backward has errors")
 
 class TestDropout(unittest.TestCase):
     """
