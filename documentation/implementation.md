@@ -18,7 +18,7 @@ Code is divided into six different Python modules.
   * Softmax - Softmax output layer
   * Dropout - Dropout regularization layer
   * ReLU - Rectified Linear Unit activation layer
-* [losses.py](../mnist/mnist/layers.py) - contains loss functions
+* [losses.py](../mnist/mnist/losses.py) - contains loss functions
   * CrossEntropy - calculates Cross-Entropy loss
 * [networks.py](../mnist/mnist/networks.py) - contains neural network implementations
   * NeuralNet - generic neural network that takes different models as input
