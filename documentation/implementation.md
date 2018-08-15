@@ -13,17 +13,17 @@ Code is divided into six different Python modules.
 * [dataloaders.py](../mnist/mnist/dataloader.py) - contains classes for loading data, currently only one DataLoader is implemented, MNISTDataLoader
 * [models.py](../mnist/mnist/models.py) - contains models, which are basically object wrapping list of layers and a loss function
 * [layers.py](../mnist/mnist/layers.py) - contains layers used in models
- * Layer - abstract class that all layers should inherit
- * Linear - Linear layer
- * Softmax - Softmax output layer
- * Dropout - Dropout regularization layer
- * ReLU - Rectified Linear Unit activation layer
+  * Layer - abstract class that all layers should inherit
+  * Linear - Linear layer
+  * Softmax - Softmax output layer
+  * Dropout - Dropout regularization layer
+  * ReLU - Rectified Linear Unit activation layer
 * [losses.py](../mnist/mnist/layers.py) - contains loss functions
- * CrossEntropy - calculates Cross-Entropy loss
+  * CrossEntropy - calculates Cross-Entropy loss
 * [networks.py](../mnist/mnist/networks.py) - contains neural network implementations
- * NeuralNet - generic neural network that takes different models as input
+  * NeuralNet - generic neural network that takes different models as input
 * [optimizers.py](../mnist/mnist/optimizers.py) - contains different optimizers
- * SGD - Stochastic Gradient Descent with mini-batches optimizer
+  * SGD - Stochastic Gradient Descent with mini-batches optimizer
 
 ### Class diagram
 

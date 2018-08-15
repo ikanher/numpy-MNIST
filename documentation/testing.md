@@ -8,7 +8,7 @@ The individual parts of the program (dataloader, layers, losses) are unit tested
 
 The forward pass is tested by using expected inputs and outputs. The correct inputs and outputs where either generated using PyTorch or found on internet sources like Wikipedia.
 
-    The backward pass is tested using [Gradient Checking](http://ufldl.stanford.edu/wiki/index.php/Gradient_checking_and_advanced_optimization). Code for Gradient Checking was borrowed from [CS231n Assignment 1](http://cs231n.github.io/assignments2016/assignment1/) and then applied for testing the backward pass of the individual layers.
+The backward pass is tested using [Gradient Checking](http://ufldl.stanford.edu/wiki/index.php/Gradient_checking_and_advanced_optimization). Code for Gradient Checking was borrowed from [CS231n Assignment 1](http://cs231n.github.io/assignments2016/assignment1/) and then applied for testing the backward pass of the individual layers.
 
 Unit tests are build using the standard python [unittest library](https://docs.python.org/3/library/unittest.html).
 
@@ -54,9 +54,9 @@ During the training it is very important that only training data is used. The re
 
 Never during the building of the model or training the model the test set is used.
 
-After the network is ready it is evaluated against the test set data. This provides the accuracy of the neural network model.
+After the network is ready it is evaluated against the test set data. This give the final accuracy of the neural network model.
 
-The final accuracies are printed out when running _predict.py_ script as follow.
+The final accuracies are printed out when running [predict.py](../mnist/predict.py) script as follows.
 
 ```
 $ ./predict.py
