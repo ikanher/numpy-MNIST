@@ -9,6 +9,8 @@ This repository is for Laboratory work for the course **Data structures and algo
 ## Documentation
 * [Getting started](documentation/getting-started.md)
 * [Specification](documentation/specification.md)
+* [Implementation](documentation/implementation.md)
+* [Testing](documentation/testing.md)
 
 ## Weekly reports
 * [Week 1](documentation/week1-report.md)

@@ -1,0 +1,6 @@
+[Dataloader],
+[Layer],[Linear]->[Layer],[Softmax]->[Layer],[Dropout]->[Layer],[ReLU]->[Layer],
+[TwoLayerModel]1-.->*[Layer],[CrossEntropy]1-.->1[TwoLayerModel]
+[NeuralNet]1-.->1[TwoLayerModel],
+[SGD]1-.->1[NeuralNet],
+[SGD]1-.->1[Dataloader]
