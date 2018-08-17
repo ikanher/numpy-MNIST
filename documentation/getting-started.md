@@ -50,6 +50,8 @@ conda install matplotlib
 
 This will train the network with default values.
 
+The `--save` switch indicates that after training the weights should be saved to a file. This is required for the `predict.py` script to work as it loads the weights from the file.
+
 ```
 cd numpy-MNIST
 ./train.py --save
