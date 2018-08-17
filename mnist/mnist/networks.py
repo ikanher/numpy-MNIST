@@ -47,7 +47,7 @@ class NeuralNet():
         output_layer = self.layers[-1]
 
         if output_layer.learning:
-            grad_output, grad_w, grad_b = output_layer.backward(grad_output)
+            grad_output, grad_w, grad_b = output_layer.backward(targets)
             output_layer.grad_w = grad_w
             output_layer.grad_b = grad_b
         else:
@@ -94,5 +94,16 @@ class NeuralNet():
                 if not layer.learning:
                     continue
 
-                layer.weights = np.load(f)
-                layer.bias = np.load(f)
+                w = np.load(f)
+                if w.shape != layer.weights.shape:
+                    msg = "Cannot load layer weights with different shapes '{}' and '{}'"
+                    raise RuntimeError(msg.format(w.shape, layer.weights.shape))
+
+                layer.weights = w
+
+                b = np.load(f)
+                if b.shape != layer.bias.shape:
+                    msg = "Cannot load bias weights with different shapes '{}' and '{}'"
+                    raise RuntimeError(msg.format(b.shape, layer.bias.shape))
+
+                layer.bias = b
