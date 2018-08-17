@@ -9,7 +9,7 @@ import numpy as np
 import os
 import sys
 
-from mnist import dataloader
+from mnist.dataloaders import MNISTDataLoader
 from mnist.networks import NeuralNet
 from mnist.models import TwoLayerModel
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     net.train = False
 
     # load the data
-    ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = dataloader.DataLoader().load_data()
+    ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = MNISTDataLoader().load_data()
     test_images = np.reshape(x_test, (-1, 28, 28))
 
     # print accuracies

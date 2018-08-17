@@ -5,7 +5,7 @@ Trains a neural neutwork with MNIST data using TwoLayerModel
 
 import argparse
 
-from mnist import dataloader
+from mnist.dataloaders import MNISTDataLoader
 from mnist.networks import NeuralNet
 from mnist.optimizers import SGD
 from mnist.models import TwoLayerModel
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         net.load_weights(weights_fname)
 
     # create the optimizer
-    optimizer = SGD(net=net, dataloader=dataloader.DataLoader(), batch_size=args.batch_size)
+    optimizer = SGD(net=net, dataloader=MNISTDataLoader(), batch_size=args.batch_size)
 
     # fit the model
     print('- Training model for', args.epochs, 'epoch, with learning rate', args.lr)

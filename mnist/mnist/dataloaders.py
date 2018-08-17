@@ -8,7 +8,7 @@ __project__ = 'mnist'
 import pickle
 import gzip
 
-class DataLoader():
+class MNISTDataLoader():
     """
     Loads the mnist training, validation and testing data.
 
