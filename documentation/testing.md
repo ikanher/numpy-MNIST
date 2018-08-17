@@ -19,20 +19,18 @@ Unit tests are build using the standard python [unittest library](https://docs.p
 Tests can be run by using the [pytest](https://docs.pytest.org/en/latest/) command.
 
 ```
-$ cd mnist/
 $ pytest
 ========================================== test session starts ==========================================
 platform linux -- Python 3.6.5, pytest-3.5.1, py-1.5.3, pluggy-0.6.0
-rootdir: /home/akir/school/numpy-MNIST/mnist, inifile:
+rootdir: /home/akir/temp/numpy-MNIST/taivasnet, inifile:
 plugins: remotedata-0.2.1, openfiles-0.3.0, doctestplus-0.1.3, arraydiff-0.2
-collected 15 items                                                                                      
+collected 13 items
 
-test/test_dataloader.py ..                                                                        [ 13%]
-test/test_layers.py ..........                                                                    [ 80%]
-test/test_losses.py .                                                                             [ 86%]
+test/test_layers.py ..........                                                                    [ 76%]
+test/test_losses.py .                                                                             [ 84%]
 test/test_networks.py ..                                                                          [100%]
 
-======================================= 15 passed in 1.53 seconds ======================================
+======================================= 13 passed in 0.09 seconds =======================================
 ```
 
 ## Code coverage
@@ -48,18 +46,18 @@ Epoch Train loss   Valid loss   Train acc Valid acc
 
 ```
 $ coverage report
-Name                  Stmts   Miss  Cover
------------------------------------------
-mnist/__init__.py         0      0   100%
-mnist/dataloader.py      22      0   100%
-mnist/layers.py          70      3    96%
-mnist/losses.py           7      0   100%
-mnist/models.py          24      0   100%
-mnist/networks.py        54     25    54%
-mnist/optimizers.py      51      3    94%
-train.py                 27      4    85%
------------------------------------------
-TOTAL                   255     35    86%
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+taivasnet/__init__.py          0      0   100%
+taivasnet/dataloaders.py      22      0   100%
+taivasnet/layers.py           70      3    96%
+taivasnet/losses.py            7      0   100%
+taivasnet/models.py           24      0   100%
+taivasnet/networks.py         54     25    54%
+taivasnet/optimizers.py       51      3    94%
+train.py                      27      4    85%
+----------------------------------------------
+TOTAL                        255     35    86%
 ```
 
 ## Integration testing
@@ -105,7 +103,7 @@ Epoch Train loss   Valid loss   Train acc Valid acc
 - Saving weights to: ../data/saved_weights.dat
 ```
 
-After that the final accuracies are printed out when running [predict.py](../mnist/predict.py) script as follows.
+After that the final accuracies are printed out when running [predict.py](../taivasnet/predict.py) script as follows.
 
 ```
 $ ./predict.py

@@ -10,19 +10,19 @@ Code is written in Python and is using [Numpy](http://www.numpy.org/) for matrix
 
 Code is divided into six different Python modules.
 
-* [dataloaders.py](../mnist/mnist/dataloader.py) - contains classes for loading data, currently only one DataLoader is implemented, MNISTDataLoader
-* [models.py](../mnist/mnist/models.py) - contains models, which are basically object wrapping list of layers and a loss function
-* [layers.py](../mnist/mnist/layers.py) - contains layers used in models
+* [dataloaders.py](../taivasnet/taivasnet/dataloader.py) - contains classes for loading data, currently only one DataLoader is implemented, taivasnetDataLoader
+* [models.py](../taivasnet/taivasnet/models.py) - contains models, which are basically object wrapping list of layers and a loss function
+* [layers.py](../taivasnet/taivasnet/layers.py) - contains layers used in models
   * Layer - abstract class that all layers should inherit
   * Linear - Linear layer
   * Softmax - Softmax output layer
   * Dropout - Dropout regularization layer
   * ReLU - Rectified Linear Unit activation layer
-* [losses.py](../mnist/mnist/losses.py) - contains loss functions
+* [losses.py](../taivasnet/taivasnet/losses.py) - contains loss functions
   * CrossEntropy - calculates Cross-Entropy loss
-* [networks.py](../mnist/mnist/networks.py) - contains neural network implementations
+* [networks.py](../taivasnet/taivasnet/networks.py) - contains neural network implementations
   * NeuralNet - generic neural network that takes different models as input
-* [optimizers.py](../mnist/mnist/optimizers.py) - contains different optimizers
+* [optimizers.py](../taivasnet/taivasnet/optimizers.py) - contains different optimizers
   * SGD - Stochastic Gradient Descent with mini-batches optimizer
 
 ### Class diagram
@@ -33,7 +33,7 @@ This diagram gives an overview of how all the objects are connected to each othe
 
 ## Neural network model architecture
 
-Neural network models are defined in [models.py](../mnist/mnist/models.py). The model that is currently used by [train.py](../mnist/train.py) is the only model currently defined, TwoLayerModel.
+Neural network models are defined in [models.py](../taivasnet/taivasnet/models.py). The model that is currently used by [train.py](../taivasnet/train.py) is the only model currently defined, TwoLayerModel.
 
 TwoLayerModel architecture is pretty simple.
 
