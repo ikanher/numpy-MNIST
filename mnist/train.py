@@ -1,24 +1,54 @@
 #!/usr/bin/env python
+"""
+Trains a neural neutwork with MNIST data using TwoLayerModel
+"""
+
+import argparse
 
 from mnist import dataloader
 from mnist.networks import NeuralNet
 from mnist.optimizers import SGD
-from mnist.losses import CrossEntropy
-from mnist.layers import Softmax
 from mnist.models import TwoLayerModel
 
-weights_fname = '../data/saved_weights.dat'
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--epochs', default=10, type=int, help='Number of training round (10)')
+    parser.add_argument('--lr', default=0.1, type=float, help='Learning rate (0.1)')
+    parser.add_argument('--batch_size', default=256, type=int, help='Mini-batch size (256)')
+    parser.add_argument('--load',
+                        dest='load_weights',
+                        action='store_true',
+                        help='Load saved weights from file')
 
-# create the model
-model = TwoLayerModel(n_input=28*28, n_hidden1=256, n_hidden2=256, n_output=10)
-net = NeuralNet(model=model)
-net.load_weights(weights_fname)
+    parser.add_argument('--save',
+                        dest='save_weights',
+                        action='store_true',
+                        help='Save weights to file after training')
 
-# create the optimizer
-#optimizer = SGD(net=net, dataloader=dataloader.DataLoader(mnist_path='data/'), batch_size=256)
-optimizer = SGD(net=net, dataloader=dataloader.DataLoader(), batch_size=512)
+    parser.add_argument('--weights_fname',
+                        default='../data/saved_weights.dat',
+                        help='Path and filename for saving and loading the weights')
 
-# fit the model
-optimizer.fit(n_epochs=10, learning_rate=1e-1)
-#net.save_weights(weights_fname)
+    args = parser.parse_args()
+
+    weights_fname = args.weights_fname
+
+    # create the model
+    model = TwoLayerModel(n_input=28*28, n_hidden1=256, n_hidden2=256, n_output=10)
+    net = NeuralNet(model=model)
+
+    if args.load_weights:
+        print('- Loading weights from:', weights_fname)
+        net.load_weights(weights_fname)
+
+    # create the optimizer
+    optimizer = SGD(net=net, dataloader=dataloader.DataLoader(), batch_size=args.batch_size)
+
+    # fit the model
+    print('- Training model for', args.epochs, 'epoch, with learning rate', args.lr)
+    optimizer.fit(n_epochs=args.epochs, learning_rate=args.lr)
+
+    if args.save_weights:
+        print("- Saving weights to:", weights_fname)
+        net.save_weights(weights_fname)
 
