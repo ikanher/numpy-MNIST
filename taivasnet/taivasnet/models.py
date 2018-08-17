@@ -3,10 +3,10 @@ Module contains models to be used in neural networks
 """
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
-from mnist.losses import CrossEntropy
-from mnist.layers import Linear, Dropout, ReLU, Softmax
+from taivasnet.losses import CrossEntropy
+from taivasnet.layers import Linear, Dropout, ReLU, Softmax
 
 class TwoLayerModel():
     """

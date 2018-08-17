@@ -1,10 +1,10 @@
 import unittest
 import numpy as np
 
-from mnist.losses import CrossEntropy
+from taivasnet.losses import CrossEntropy
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 class TestCrossEntropy(unittest.TestCase):
     """

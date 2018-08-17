@@ -3,7 +3,7 @@ Module contains loss functions to be used in a Neural Network
 """
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 import numpy as np
 

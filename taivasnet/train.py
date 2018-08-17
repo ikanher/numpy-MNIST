@@ -5,10 +5,10 @@ Trains a neural neutwork with MNIST data using TwoLayerModel
 
 import argparse
 
-from mnist.dataloaders import MNISTDataLoader
-from mnist.networks import NeuralNet
-from mnist.optimizers import SGD
-from mnist.models import TwoLayerModel
+from taivasnet.dataloaders import MNISTDataLoader
+from taivasnet.networks import NeuralNet
+from taivasnet.optimizers import SGD
+from taivasnet.models import TwoLayerModel
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

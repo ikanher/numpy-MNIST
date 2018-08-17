@@ -1,11 +1,11 @@
 import unittest
 import numpy as np
 
-from mnist.layers import Softmax, Linear, ReLU, Dropout
-from mnist.losses import CrossEntropy
+from taivasnet.layers import Softmax, Linear, ReLU, Dropout
+from taivasnet.losses import CrossEntropy
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 class TestLinear(unittest.TestCase):
     """

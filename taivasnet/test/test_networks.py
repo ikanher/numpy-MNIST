@@ -2,12 +2,12 @@ import unittest
 import numpy as np
 import os
 
-from mnist.networks import NeuralNet
-from mnist.layers import Linear, Softmax
-from mnist.losses import CrossEntropy
+from taivasnet.networks import NeuralNet
+from taivasnet.layers import Linear, Softmax
+from taivasnet.losses import CrossEntropy
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 class TestModelOne():
     """

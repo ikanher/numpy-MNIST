@@ -3,14 +3,14 @@ Contains different dataloaders
 """
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 import pickle
 import gzip
 
 class MNISTDataLoader():
     """
-    Loads the mnist training, validation and testing data.
+    Loads the MNIST training, validation and testing data.
 
     Data from http://deeplearning.net/data/mnist/mnist.pkl.gz--2018-07-25
     """
@@ -45,7 +45,7 @@ class MNISTDataLoader():
 
     def load_data(self):
         """
-        Loads mnist data.
+        Loads MNIST data.
 
         Returns training, validation and test sets.
         """

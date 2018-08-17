@@ -9,6 +9,7 @@
 * Created simple CLI scripts for training and predicting
 * Fixed code structure to support code coverage reports
 * Created first versions of testing and implementation documents
+* Renamed the python module from 'mnist' to 'taivasnet' to reflect that is is a more general Neural Network library than just specific for MNIST
 
 ## How has the program progressed?
 Really good! The program is starting to take it's final form now.
@@ -28,9 +29,7 @@ Really good! The program is starting to take it's final form now.
 * Figure out testing of SGD and NeuralNet objects (integration tests?)
 * Finalize documentation
 * Figure out if there is something more that needs to be done
-* If I have time
-  * Make an example of using the network for something else than MNIST that can be trained on a CPU
-  * Rename the python module from 'mnist' to something else, as it actually can be used for other datasets also
+* If I have time make an example of using the network for something else than MNIST that can be trained on a CPU
 
 ## Hours
 * Around 35

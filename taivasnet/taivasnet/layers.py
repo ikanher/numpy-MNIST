@@ -3,7 +3,7 @@ Contains different layers to be used in Neural Network
 """
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 import numpy as np
 

@@ -3,7 +3,7 @@ Module contains optimizers for training a Neural Netowrk
 """
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 import numpy as np
 

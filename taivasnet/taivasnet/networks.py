@@ -5,7 +5,7 @@ Module contains Neural Network implementations
 import numpy as np
 
 __author__ = 'Aki Rehn'
-__project__ = 'mnist'
+__project__ = 'taivasnet'
 
 class NeuralNet():
     """

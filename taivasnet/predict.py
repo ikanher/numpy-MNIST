@@ -9,9 +9,9 @@ import numpy as np
 import os
 import sys
 
-from mnist.dataloaders import MNISTDataLoader
-from mnist.networks import NeuralNet
-from mnist.models import TwoLayerModel
+from taivasnet.dataloaders import MNISTDataLoader
+from taivasnet.networks import NeuralNet
+from taivasnet.models import TwoLayerModel
 
 def print_set_accuracy(net, x, y, msg):
     preds = net.forward(x)
