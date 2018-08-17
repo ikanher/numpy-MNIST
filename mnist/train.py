@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--weights_fname',
                         default='../data/saved_weights.dat',
-                        help='Path and filename for saving and loading the weights')
+                        help='Path and filename for saving and loading the weights (../data/saved_weights.dat)')
 
     args = parser.parse_args()
 

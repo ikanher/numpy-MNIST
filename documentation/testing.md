@@ -1,12 +1,14 @@
 # Testing
 
-The program is tested with unit tests, integration tests, usage testing and standard Machine Learning testing standards.
+The program is tested with unit tests, standard Machine Learning testing and usage testing.
+
+Maybe some kind of automated integration tests will be introduced, but this decision hasn't settled yet.
 
 ## Unit testing
 
 The individual parts of the program (dataloader, layers, losses) are unit tested.
 
-The forward pass is tested by using expected inputs and outputs. The correct inputs and outputs where either generated using PyTorch or found on internet sources like Wikipedia.
+The forward pass is tested by using expected inputs and outputs. The correct inputs and outputs where either generated using PyTorch or found on internet sources like Wikipedia or online courses.
 
 The backward pass is tested using [Gradient Checking](http://ufldl.stanford.edu/wiki/index.php/Gradient_checking_and_advanced_optimization). Code for Gradient Checking was borrowed from [CS231n Assignment 1](http://cs231n.github.io/assignments2016/assignment1/) and then applied for testing the backward pass of the individual layers.
 
@@ -23,14 +25,14 @@ $ pytest
 platform linux -- Python 3.6.5, pytest-3.5.1, py-1.5.3, pluggy-0.6.0
 rootdir: /home/akir/school/numpy-MNIST/mnist, inifile:
 plugins: remotedata-0.2.1, openfiles-0.3.0, doctestplus-0.1.3, arraydiff-0.2
-collected 13 items
+collected 15 items                                                                                      
 
-test/test_dataloader.py ..                                                                        [ 15%]
-test/test_layers.py ..........                                                                    [ 92%]
-test/test_losses.py .                                                                             [100%]
+test/test_dataloader.py ..                                                                        [ 13%]
+test/test_layers.py ..........                                                                    [ 80%]
+test/test_losses.py .                                                                             [ 86%]
+test/test_networks.py ..                                                                          [100%]
 
-======================================= 13 passed in 1.53 seconds =======================================
-(deep-learning) akir@mindfields:~/school/numpy-MNIST/mnist$
+======================================= 15 passed in 1.53 seconds ======================================
 ```
 
 ## Code coverage
@@ -62,7 +64,7 @@ TOTAL                   255     35    86%
 
 ## Integration testing
 
-TBD
+TBD: Should this be done as part of the unit test set or is Machine Learning testing 
 
 ## Machine Learning testing
 
@@ -74,7 +76,7 @@ Never during the building of the model or training the model the test set is use
 
 After the network is ready it is evaluated against the test set data. This give the final accuracy of the neural network model.
 
-The final accuracies are printed out when running [predict.py](../mnist/predict.py) script as follows.
+Test can be done by first training the network
 
 ```
 $ ./train.py --epochs 20 --save
@@ -103,6 +105,8 @@ Epoch Train loss   Valid loss   Train acc Valid acc
 - Saving weights to: ../data/saved_weights.dat
 ```
 
+After that the final accuracies are printed out when running [predict.py](../mnist/predict.py) script as follows.
+
 ```
 $ ./predict.py
 Training set accuracy: 0.98342
@@ -111,9 +115,11 @@ Test set accuracy: 0.9723
 ^C
 ```
 
+Achieving 97% accuracy on the test set, using a relatively simple model, is a clear sign that the code and model are performing as expected.
+
 ## Usage testing
 
 Last layer of testing is usage testing.
 
-This was done by training the network and then using the `predict.py` script for manually checking that the predictions, actuals and the digit in the image all match.
+This was done by training the network and then using the `predict.py` script for manually checking that the predictions, actuals and the digit in the image all match most of the time.
 

@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights_fname',
                         default='../data/saved_weights.dat',
-                        help='Path file file containing the weights to be used')
+                        help='Path to the file containing the weights to be used (../data/saved_weights.dat)')
 
     args = parser.parse_args()
     weights_fname = args.weights_fname

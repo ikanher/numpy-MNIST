@@ -25,6 +25,7 @@ Really good! The program is starting to take it's final form now.
 * Else everything has gone quite fine after fixing the shuffle bug last week that caused poorer results compared to the PyTorch models
 
 ## What next?
+* Figure out testing of SGD and NeuralNet objects (integration tests?)
 * Finalize documentation
 * Figure out if there is something more that needs to be done
 * If I have time
