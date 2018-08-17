@@ -96,7 +96,8 @@ class NeuralNet():
 
                 w = np.load(f)
                 if w.shape != layer.weights.shape:
-                    msg = "Cannot load layer weights with different shapes '{}' and '{}'"
+                    msg = "Cannot load layer weights with different shapes '{}' and '{}'."
+                    msg += ' Did you run `train.py --save`?'
                     raise RuntimeError(msg.format(w.shape, layer.weights.shape))
 
                 layer.weights = w
@@ -104,6 +105,7 @@ class NeuralNet():
                 b = np.load(f)
                 if b.shape != layer.bias.shape:
                     msg = "Cannot load bias weights with different shapes '{}' and '{}'"
+                    msg += ' Did you run `train.py --save`?'
                     raise RuntimeError(msg.format(b.shape, layer.bias.shape))
 
                 layer.bias = b

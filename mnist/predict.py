@@ -6,6 +6,8 @@ Makes predictions and displays random images from MNIST test set
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import sys
 
 from mnist import dataloader
 from mnist.networks import NeuralNet
@@ -25,8 +27,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
     weights_fname = args.weights_fname
 
+    if not os.path.isfile(weights_fname):
+        print("Error: File '{}' does not exist. Did you run `./train.py --save`?".format(weights_fname))
+        sys.exit()
+
     # create the model
-    model = TwoLayerModel(n_input=28*28, n_hidden1=256, n_hidden2=256, n_output=10)
+    model = TwoLayerModel()
     net = NeuralNet(model=model)
     net.load_weights(weights_fname)
 

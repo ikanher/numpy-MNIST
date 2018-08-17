@@ -34,7 +34,7 @@ if __name__ == '__main__':
     weights_fname = args.weights_fname
 
     # create the model
-    model = TwoLayerModel(n_input=28*28, n_hidden1=256, n_hidden2=256, n_output=10)
+    model = TwoLayerModel()
     net = NeuralNet(model=model)
 
     if args.load_weights:
