@@ -15,14 +15,27 @@ class MNISTDataLoader():
     Data from http://deeplearning.net/data/mnist/mnist.pkl.gz--2018-07-25
     """
 
-    def __init__(self, mnist_path='../data'):
+    def __init__(self, mnist_path='../data', n_samples=None):
+        """
+        Constructor
+
+        mnist_path - path to mnist.pkl.gz
+        n_samples - how many samples to use (default all)
+        """
         self.mnist_path = mnist_path
         self.mnist_fname = 'mnist.pkl.gz'
+        self.n_samples = n_samples
 
     def _load_mnist(self):
         mnist_data_file = self.mnist_path + '/' + self.mnist_fname
+
         with gzip.open(mnist_data_file, 'rb') as f:
-            return pickle.load(f, encoding='latin-1')
+            ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = pickle.load(f, encoding='latin-1')
+        if self.n_samples != None:
+            x_train = x_train[:self.n_samples]
+            y_train = y_train[:self.n_samples]
+
+        return ((x_train, y_train), (x_valid, y_valid), (x_test, y_test))
 
     def normalize(self, data):
         """
@@ -41,7 +54,6 @@ class MNISTDataLoader():
         x_valid = (x_valid-mean)/std
 
         return ((x_train, y_train), (x_valid, y_valid))
-
 
     def load_data(self):
         """

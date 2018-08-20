@@ -63,6 +63,8 @@ class NeuralNet():
             else:
                 grad_output = layer.backward(grad_output)
 
+        return grad_output
+
 
     def loss(self, y_pred, y):
         """

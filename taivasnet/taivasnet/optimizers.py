@@ -52,7 +52,7 @@ class SGD():
         np.random.shuffle(random_idxs)
         return arr1[random_idxs], arr2[random_idxs]
 
-    def fit(self, n_epochs=5, learning_rate=1e-2):
+    def fit(self, n_epochs=5, learning_rate=1e-2, suppress_output=False):
         """
         Trains the model
 
@@ -60,8 +60,9 @@ class SGD():
         learning_rate - The learning rate to use
         """
 
-        fmt = '{:<5} {:12} {:12} {:6} {:6}'
-        print(fmt.format('Epoch', 'Train loss', 'Valid loss', 'Train acc', 'Valid acc'))
+        if not suppress_output:
+            fmt = '{:<5} {:12} {:12} {:6} {:6}'
+            print(fmt.format('Epoch', 'Train loss', 'Valid loss', 'Train acc', 'Valid acc'))
 
         for epoch in range(n_epochs):
 
@@ -106,5 +107,6 @@ class SGD():
             accuracy = np.mean(y_pred.argmax(axis=1) == targets)
             valid_accuracy = np.mean(y_valid_pred.argmax(axis=1) == self.y_valid)
 
-            fmt = '{:<5} {:03.10f} {:03.10f} {:02.7f} {:02.7f}'
-            print(fmt.format(epoch, loss, loss_valid, accuracy, valid_accuracy))
+            if not suppress_output:
+                fmt = '{:<5} {:03.10f} {:03.10f} {:02.7f} {:02.7f}'
+                print(fmt.format(epoch, loss, loss_valid, accuracy, valid_accuracy))
