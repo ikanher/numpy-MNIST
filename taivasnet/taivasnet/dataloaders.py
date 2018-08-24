@@ -35,9 +35,13 @@ class MNISTDataLoader():
             x_train = x_train[:self.n_samples]
             y_train = y_train[:self.n_samples]
 
+        # normalize training data
+        (x_train, y_train), (x_valid, y_valid) = \
+                self._normalize(((x_train, y_train), (x_valid, y_valid)))
+
         return ((x_train, y_train), (x_valid, y_valid), (x_test, y_test))
 
-    def normalize(self, data):
+    def _normalize(self, data):
         """
         Normalizes training and validation data.
         """
@@ -48,7 +52,7 @@ class MNISTDataLoader():
         std = x_train.std()
 
         # normalize training data
-        x_train = (x_train - mean) / std
+        x_train = (x_train - mean)/std
 
         # normalize validation data
         x_valid = (x_valid-mean)/std

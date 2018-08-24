@@ -16,6 +16,29 @@ class CrossEntropy(object):
     def loss(self, y_pred, y):
         """
         Calculates Cross-Entropy Loss
+
+        y_pred - predictions
+        y - target values
         """
         predictions = np.diag(y_pred[:, y])
         return -np.mean(np.log(predictions))
+
+    def gradient(self, y_pred, y, inputs):
+        """
+        Cross-Entropy Softmax gradient
+
+        Calculates the difference between actual values and predictions.
+        This is also the derivative of the Cross Entropy loss function.
+
+        https://deepnotes.io/softmax-crossentropy
+
+        y_pred - predictions
+        y - target values
+        inputs - not used where
+        """
+        grad = y_pred.copy()
+        k = grad.shape[0]
+        grad[range(k), y] -= 1
+        grad = grad/k
+
+        return grad

@@ -3,6 +3,7 @@ import numpy as np
 
 from taivasnet.layers import Softmax, Linear, ReLU, Dropout
 from taivasnet.losses import CrossEntropy
+from .gradientchecker import GradientChecker
 
 __author__ = 'Aki Rehn'
 __project__ = 'taivasnet'
@@ -55,13 +56,13 @@ class TestLinear(unittest.TestCase):
 
         linear.weights, linear.bias = weights, bias
 
-        grad_inputs_numerical = eval_numerical_gradient_array(
+        grad_inputs_numerical = GradientChecker.eval_numerical_gradient_array(
                 lambda x: linear.forward(inputs), inputs, grad_output)
 
-        grad_weights_numerical = eval_numerical_gradient_array(
+        grad_weights_numerical = GradientChecker.eval_numerical_gradient_array(
                 lambda x: linear.forward(inputs), weights, grad_output)
 
-        grad_bias_numerical = eval_numerical_gradient_array(
+        grad_bias_numerical = GradientChecker.eval_numerical_gradient_array(
                 lambda x: linear.forward(inputs), bias, grad_output)
 
         grad_inputs, grad_weights, grad_bias = linear.backward(grad_output)
@@ -90,30 +91,6 @@ class TestSoftmax(unittest.TestCase):
         data = np.array([[5., 2., -1, 3]])
         result = self.softmax.forward(data)
         self.assertTrue(np.allclose(result, correct), msg="Softmax forward2 has errors")
-
-    def test_backward(self):
-        """
-        Test backpropagation using gradient checking
-        """
-
-        # error tolerance
-        epsilon = 1e-12
-
-        n_inputs, n_classes = 20, 30
-        inputs = np.random.randn(n_inputs, n_classes)
-        targets = np.random.randint(n_classes, size=n_inputs)
-        grad_output = 1.0
-
-        def f(x):
-            predictions = self.softmax.forward(x)
-            return self.cross_entropy.loss(predictions, targets)
-
-        grad_inputs_numerical = eval_numerical_gradient(f, inputs, verbose=False)
-
-        predictions = self.softmax.forward(inputs)
-        grad_inputs = self.softmax.backward(targets)
-
-        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="Softmax backward has errors")
 
 class TestReLU(unittest.TestCase):
     """
@@ -148,7 +125,7 @@ class TestReLU(unittest.TestCase):
         x = np.random.randn(3, 2, 8, 8)
         grad_output = np.random.randn(3, 2, 8, 8)
 
-        grad_numerical = eval_numerical_gradient_array(lambda x: self.relu.forward(x), x, grad_output)
+        grad_numerical = GradientChecker.eval_numerical_gradient_array(lambda x: self.relu.forward(x), x, grad_output)
 
         output = self.relu.forward(x)
         grad = self.relu.backward(grad_output)
@@ -187,60 +164,3 @@ class TestDropout(unittest.TestCase):
         pct = zeros.size / data.size
 
         self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward2 has errors")
-
-
-"""
-Gradient checking code from:
-cs231n.github.io/assignments2017/assignment1
-"""
-
-def eval_numerical_gradient(f, x, verbose=True, h=1e-5):
-    """
-    a naive implementation of numerical gradient of f at x
-    - f should be a function that takes a single argument
-    - x is the point (numpy array) to evaluate the gradient at
-    """
-
-    fx = f(x) # evaluate function value at original point
-    grad = np.zeros_like(x)
-    # iterate over all indexes in x
-    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
-    while not it.finished:
-
-        # evaluate function at x+h
-        ix = it.multi_index
-        oldval = x[ix]
-        x[ix] = oldval + h # increment by h
-        fxph = f(x) # evalute f(x + h)
-        x[ix] = oldval - h
-        fxmh = f(x) # evaluate f(x - h)
-        x[ix] = oldval # restore
-
-        # compute the partial derivative with centered formula
-        grad[ix] = (fxph - fxmh) / (2 * h) # the slope
-        if verbose:
-            print(ix, grad[ix])
-        it.iternext() # step to next dimension
-
-    return grad
-
-def eval_numerical_gradient_array(f, x, df, h=1e-5):
-    """
-    Evaluate a numeric gradient for a function that accepts a numpy
-    array and returns a numpy array.
-    """
-    grad = np.zeros_like(x)
-    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
-    while not it.finished:
-        ix = it.multi_index
-
-        oldval = x[ix]
-        x[ix] = oldval + h
-        pos = f(x).copy()
-        x[ix] = oldval - h
-        neg = f(x).copy()
-        x[ix] = oldval
-
-        grad[ix] = np.sum((pos - neg) * df) / (2 * h)
-        it.iternext()
-    return grad

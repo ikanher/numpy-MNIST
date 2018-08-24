@@ -27,7 +27,7 @@ class TestMNISTDataLoader(unittest.TestCase):
     def test_normalize(self):
         ((x_train, y_train), (x_valid, y_valid), _) = self.loader.load_data()
         ((x_train, y_train), (x_valid, y_valid)) = \
-                self.loader.normalize(((x_train, y_train), (x_valid, y_valid)))
+                self.loader._normalize(((x_train, y_train), (x_valid, y_valid)))
 
         self.assertTrue(np.isclose(x_train.mean(), 0, atol=self.epsilon))
         self.assertTrue(np.isclose(x_train.std(), 1, atol=self.epsilon))

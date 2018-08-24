@@ -35,10 +35,6 @@ class SGD():
         # load the training data using DataLoader object
         ((x_train, y_train), (x_valid, y_valid), _) = self.dataloader.load_data()
 
-        # normalize training data
-        (x_train, y_train), (x_valid, y_valid) = \
-                self.dataloader.normalize(((x_train, y_train), (x_valid, y_valid)))
-
         self.x_train = x_train
         self.y_train = y_train
         self.x_valid = x_valid
@@ -80,9 +76,10 @@ class SGD():
 
                 # calculate the loss
                 loss = self.net.loss(predictions, targets)
+                grad_loss = self.net.loss_gradient(predictions, targets, inputs)
 
                 # backpropagation
-                self.net.backward(targets)
+                self.net.backward(grad_loss)
 
                 # update weights
                 for layer in self.net.layers:

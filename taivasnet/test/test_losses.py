@@ -2,6 +2,8 @@ import unittest
 import numpy as np
 
 from taivasnet.losses import CrossEntropy
+from taivasnet.layers import Softmax, Linear
+from .gradientchecker import GradientChecker
 
 __author__ = 'Aki Rehn'
 __project__ = 'taivasnet'
@@ -32,3 +34,28 @@ class TestCrossEntropy(unittest.TestCase):
 
         loss = self.cross_entropy.loss(y_pred, y)
         self.assertTrue(np.isclose(loss, correct, rtol=1e-4))
+
+    def test_gradient(self):
+        """
+        Test backpropagation using gradient checking
+        """
+
+        # error tolerance
+        epsilon = 1e-12
+
+        n_inputs, n_classes = 20, 30
+        inputs = np.random.randn(n_inputs, n_classes)
+        targets = np.random.randint(n_classes, size=n_inputs)
+        grad_output = 1.0
+        softmax = Softmax()
+
+        def f(x):
+            predictions = softmax.forward(x)
+            return self.cross_entropy.loss(predictions, targets)
+
+        grad_inputs_numerical = GradientChecker.eval_numerical_gradient(f, inputs, verbose=False)
+
+        predictions = softmax.forward(inputs)
+        grad_inputs = self.cross_entropy.gradient(predictions, targets, inputs)
+
+        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="CrossEntropy gradient calculated correctly")

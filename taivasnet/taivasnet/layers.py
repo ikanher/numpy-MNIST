@@ -79,10 +79,6 @@ class Softmax(Layer):
     Softmax layer
     """
 
-    def __init__(self):
-        super().__init__()
-        self.previous = None
-
     def forward(self, x):
         """
         Calculates Softmax
@@ -93,24 +89,17 @@ class Softmax(Layer):
         https://en.wikipedia.org/wiki/Softmax_function
         """
         softmax = np.exp(x)/np.sum(np.exp(x), axis=1, keepdims=True)
-        self.previous = softmax
         return softmax
 
-    def backward(self, y):
+    def backward(self, grad_output):
         """
-        Cross-Entropy Softmax gradient
+        Softmax gradient
 
-        Calculates the difference between actual values and predictions.
-        This is also the derivative of the Cross Entropy loss function.
-
-        https://deepnotes.io/softmax-crossentropy
+        Softmax is used with CrossEntropy loss, so the gradient
+        is calculated in the loss function and we don't need to
+        do anything here.
         """
-        grad = self.previous.copy()
-        k = grad.shape[0]
-        grad[range(k), y] -= 1
-        grad = grad/k
-
-        return grad
+        return grad_output
 
 class Dropout(Layer):
     """
@@ -139,7 +128,6 @@ class Dropout(Layer):
         # dropout doesn't need to anything as the dropped weights are
         # dead and don't contribute to the gradient
         return grad_output
-
 
 class ReLU(Layer):
     """

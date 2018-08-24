@@ -16,7 +16,7 @@ class NeuralNet():
         """
         Constructor
 
-        - model to be used
+        model - model to be used
         """
         self.train = True
         self.layers = model.get_layers()
@@ -36,25 +36,17 @@ class NeuralNet():
 
         return x
 
-    def backward(self, targets):
+    def backward(self, grad_loss):
         """
         Backpropagates through the network
 
         https://en.wikipedia.org/wiki/Backpropagation
         """
 
-        # get output layer gradient(s)
-        output_layer = self.layers[-1]
-
-        if output_layer.learning:
-            grad_output, grad_w, grad_b = output_layer.backward(targets)
-            output_layer.grad_w = grad_w
-            output_layer.grad_b = grad_b
-        else:
-            grad_output = output_layer.backward(targets)
+        grad_output = grad_loss
 
         # iterate through the rest of the layers in reverse order
-        for layer in reversed(self.layers[:-1]):
+        for layer in reversed(self.layers):
 
             if layer.learning:
                 grad_output, grad_w, grad_b = layer.backward(grad_output)
@@ -74,6 +66,16 @@ class NeuralNet():
         y - target values
         """
         return self.loss_func.loss(y_pred, y)
+
+    def loss_gradient(self, y_pred, y, inputs):
+        """
+        Calculates the gradient of the loss function
+
+        y_pred - prediction
+        y - target values
+        inputs - inputs to the network
+        """
+        return self.loss_func.gradient(y_pred, y, inputs)
 
     def save_weights(self, filename):
         """

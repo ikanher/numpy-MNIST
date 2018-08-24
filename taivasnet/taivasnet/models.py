@@ -49,3 +49,48 @@ class TwoLayerModel():
         Returns the loss function to be used
         """
         return CrossEntropy()
+
+class NeuroseModel():
+    """
+    The same model that is used in
+
+    https://github.com/irenenikk/neurose
+    """
+
+    def __init__(self):
+        """
+        Construct a new NeuoreModel
+
+        n_inputs - number of inputs
+        n_hidden1 - number of nodes in the first hidden layer
+        n_hidden2 - number of nodes in the second hidden layer
+        n_output - number of outputs
+        """
+        # model parameters
+        self.n_input = 28*28
+        self.n_hidden1 = 256
+        self.n_hidden2 = 120
+        self.n_hidden3 = 64
+        self.n_output = 10
+
+    def get_layers(self):
+        """
+        Returns a list of layers that make this model
+        """
+        layers = []
+        layers.append(ReLU())                                   # activation
+        layers.append(Linear(self.n_input, self.n_hidden1))     # input layers
+        layers.append(ReLU())                                   # activation
+        layers.append(Linear(self.n_hidden1, self.n_hidden2))   # first hidden layer
+        layers.append(ReLU())                                   # activation
+        layers.append(Linear(self.n_hidden2, self.n_hidden3))   # second hidden layer
+        layers.append(ReLU())                                   # activation
+        layers.append(Linear(self.n_hidden3, self.n_output))    # second hidden layer
+        layers.append(Softmax())                                # output layer
+        return layers
+
+    def get_loss_func(self):
+        """
+        Returns the loss function to be used
+        """
+        return CrossEntropy()
