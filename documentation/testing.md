@@ -12,6 +12,12 @@ The backward pass is tested using [Gradient Checking](http://ufldl.stanford.edu/
 
 Unit tests are build using the standard python [unittest library](https://docs.python.org/3/library/unittest.html).
 
+Neural network is tested by creating a two layer network and some random inputs are created. Then two linear layers are created and weights are copied from the two layer network.
+
+Forward pass is checked by combining the results of the two linear layers chained together and then compared to the results given by the NeuralNet's forward() method. The backward pass is tested in a similar manner.
+
+The optimizer is tested using integration tests.
+
 ### Running the tests
 
 Tests can be run by using the [pytest](https://docs.pytest.org/en/latest/) command.
@@ -86,17 +92,9 @@ It can be then viewed in the browser by opening the `htmlcov/index.html` file.
 
 ## Integration testing
 
-### The optimizer
 Integration tests are implemented for the Stochastic Gradient Descent (SGD) optimizer.
 
 The test uses a subset of MNIST data and checks that the loss is getting lower after running a different number of optimizers steps.
-
-### The neural network
-For the NeuralNet the integration tests work in a similar manner. Two layer network and some random inputs are created. Then two linear layers are created and weights are copied from the two layer network.
-
-Forward pass is checked by combining the results of the two linear layers chained together and then compared to the results given by the NeuralNet's forward() method. The backward pass is tested in a similar manner.
-
-As each of the layers have their own unit-tests that are tested using Gradient Checking, this should give very good confidence that the forward and backward passes are working correctly.
 
 ## Machine Learning testing
 

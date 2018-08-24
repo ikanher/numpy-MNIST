@@ -229,7 +229,9 @@ Ehdottomasti toteuttamisen arvoinen idea. Itseasiassa mietin tätä jo alkuvaihe
 
 ### Missä gradientit tulisi laskea?
 
-Olen edelleen sitä mieltä, että jokaisen layerin/aktivointifunktion tulisi osata laskea oma gradientinsa.
+~~Olen edelleen sitä mieltä, että jokaisen layerin/aktivointifunktion tulisi osata laskea oma gradientinsa.
 
-Ongelmia kuitenkin tuottaa (klassifiointiaongelmia yhteydessä, jossa on usein käytössä Softmax aktivointifunktio, sekä CrossEntropy häviöfunktio) se, että näillä on yhteinen derivaattaa. Jos siirrän CrossEntropyn derivaatan laskemisen CrossEntropy moduulin vastuulle, niin kuinka Softmax funktio derivaattaa tulisi käyttää?
+Ongelmia kuitenkin tuottaa (klassifiointiaongelmia yhteydessä, jossa on usein käytössä Softmax aktivointifunktio, sekä CrossEntropy häviöfunktio) se, että näillä on yhteinen derivaattaa. Jos siirrän CrossEntropyn derivaatan laskemisen CrossEntropy moduulin vastuulle, niin kuinka Softmax funktio derivaattaa tulisi käyttää?~~
+
+Vaikuttaa siltä, että paras paikkea häviön gradientint laskemiseen on kuitenkin häviöfunktio itse. Päätinkin Neurosen toteutuksesta inspiroituneena refaktoroida oman koodini tällä tavalla. Nyt uusien häviöfunktioiden lisääminen pitäisi olla huomattavasti yksinkertaisempaa.
 
