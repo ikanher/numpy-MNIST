@@ -17,4 +17,5 @@ This repository is for Laboratory work for the course **Data structures and algo
 * [Week 2](documentation/week2-report.md)
 * [Week 3](documentation/week3-report.md)
 * [Week 4](documentation/week4-report.md)
+* [Week 5](documentation/week5-report.md)
 
