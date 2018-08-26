@@ -38,7 +38,7 @@ class TestLinear(unittest.TestCase):
             [ 0.5640, -0.1794, -0.4543]])
 
         result = self.linear.forward(inputs)
-        self.assertTrue(np.allclose(result, correct, atol=1e-3), msg="Linear layer forward pass has errors")
+        self.assertTrue(np.allclose(result, correct, atol=1e-3), msg="Linear layer forward pass works")
 
     def test_backward(self):
         """
@@ -67,9 +67,9 @@ class TestLinear(unittest.TestCase):
 
         grad_inputs, grad_weights, grad_bias = linear.backward(grad_output)
 
-        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="Linear grad_inputs has errors")
-        self.assertTrue(np.allclose(grad_weights, grad_weights_numerical, rtol=epsilon), msg="Linear grad_weights has errors")
-        self.assertTrue(np.allclose(grad_bias, grad_bias_numerical, rtol=epsilon), msg="Linear grad_bias has errors")
+        self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="Linear grad_inputs works")
+        self.assertTrue(np.allclose(grad_weights, grad_weights_numerical, rtol=epsilon), msg="Linear grad_weights works")
+        self.assertTrue(np.allclose(grad_bias, grad_bias_numerical, rtol=epsilon), msg="Linear grad_bias works")
 
 class TestSoftmax(unittest.TestCase):
     """
@@ -84,13 +84,13 @@ class TestSoftmax(unittest.TestCase):
         correct = np.array([[0.26894142, 0.73105858]])
         data = np.array([[1., 2.]])
         result = self.softmax.forward(data)
-        self.assertTrue(np.allclose(result, correct), msg="Softmax forward1 has errors")
+        self.assertTrue(np.allclose(result, correct), msg="Softmax forward1 works")
 
     def test_forward2(self):
         correct = np.array([[0.84203357, 0.04192238, 0.00208719, 0.11395685]])
         data = np.array([[5., 2., -1, 3]])
         result = self.softmax.forward(data)
-        self.assertTrue(np.allclose(result, correct), msg="Softmax forward2 has errors")
+        self.assertTrue(np.allclose(result, correct), msg="Softmax forward2 works")
 
 class TestReLU(unittest.TestCase):
     """
@@ -107,12 +107,12 @@ class TestReLU(unittest.TestCase):
         data[0, 0] = -5
 
         output = self.relu.forward(data)
-        self.assertFalse(output[output < 0].any(), msg="ReLU forward1 has errors")
+        self.assertFalse(output[output < 0].any(), msg="ReLU forward1 works")
 
     def test_forward2(self):
         data = np.random.randn(10, 10)
         output = self.relu.forward(data)
-        self.assertFalse(output[output < 0].any(), msg="ReLU forward2 has errors")
+        self.assertFalse(output[output < 0].any(), msg="ReLU forward2 works")
 
     def test_backward(self):
         """
@@ -130,7 +130,7 @@ class TestReLU(unittest.TestCase):
         output = self.relu.forward(x)
         grad = self.relu.backward(grad_output)
 
-        self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="ReLU backward has errors")
+        self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="ReLU backward works")
 
 class TestDropout(unittest.TestCase):
     """
@@ -149,7 +149,7 @@ class TestDropout(unittest.TestCase):
         zeros = output[output == 0]
         pct = zeros.size / data.size
 
-        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward1 has errors")
+        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward1 works")
 
     def test_forward2(self):
 
@@ -163,4 +163,4 @@ class TestDropout(unittest.TestCase):
         zeros = output[output == 0]
         pct = zeros.size / data.size
 
-        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward2 has errors")
+        self.assertTrue(np.isclose(pct, p, rtol=1e-1), msg="Dropout forward2 works")

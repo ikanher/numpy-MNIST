@@ -5,10 +5,52 @@ Module contains models to be used in neural networks
 __author__ = 'Aki Rehn'
 __project__ = 'taivasnet'
 
-from taivasnet.losses import CrossEntropy
+from taivasnet.losses import CrossEntropy, MSE
 from taivasnet.layers import Linear, Dropout, ReLU, Softmax
 
-class TwoLayerModel():
+class Model():
+    """
+    Abstract class representing neural network models
+    """
+
+    def get_layers(self):
+        raise NotImplementedError("get_layers not implemented")
+
+    def get_loss_func(self):
+        raise NotImplementedError("get_loss_func not implemented")
+
+class LinearModel(Model):
+    """
+    Linear model
+    """
+
+    def __init__(self, n_input=1, n_hidden=10, n_output=1):
+        """
+        Construct a new LinearModel
+        """
+        # model parameters
+        self.n_input = n_input
+        self.n_hidden = 10
+        self.n_output = n_output
+
+    def get_layers(self):
+        """
+        Returns a list of layers that make this model
+        """
+        layers = []
+        layers.append(Linear(self.n_input, self.n_hidden))
+        layers.append(ReLU())
+        layers.append(Linear(self.n_hidden, self.n_output))
+
+        return layers
+
+    def get_loss_func(self):
+        """
+        Returns the loss function to be used
+        """
+        return MSE()
+
+class TwoLayerModel(Model):
     """
     Model containing two hidden layers with Softmax output and Cross-Entropy loss
     """
@@ -50,7 +92,7 @@ class TwoLayerModel():
         """
         return CrossEntropy()
 
-class NeuroseModel():
+class NeuroseModel(Model):
     """
     The same model that is used in
 

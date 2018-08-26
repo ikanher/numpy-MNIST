@@ -7,7 +7,7 @@ __project__ = 'taivasnet'
 
 import numpy as np
 
-class CrossEntropy(object):
+class CrossEntropy():
     """
     Cross-Entropy Loss
 
@@ -40,5 +40,22 @@ class CrossEntropy(object):
         k = grad.shape[0]
         grad[range(k), y] -= 1
         grad = grad/k
-
         return grad
+
+class MSE():
+    """
+    Mean Squared Error
+    """
+
+    def loss(self, y_pred, y):
+        """
+        Calculates Mean Squared Error loss
+
+        y_pred - predictions
+        y - target values
+        """
+        return np.sum((y_pred - y)**2) / y.size
+
+    def gradient(self, y_pred, y, inputs):
+        k = y_pred.shape[0]
+        return (y_pred - y) / y.size

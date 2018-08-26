@@ -5,6 +5,7 @@ Contains different dataloaders
 __author__ = 'Aki Rehn'
 __project__ = 'taivasnet'
 
+import numpy as np
 import pickle
 import gzip
 
@@ -66,4 +67,21 @@ class MNISTDataLoader():
         Returns training, validation and test sets.
         """
         ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = self._load_mnist()
+        return ((x_train, y_train), (x_valid, y_valid), (x_test, y_test))
+
+class RegressionDataLoader():
+
+    def load_data(self):
+        """
+        Generates some data for linear regression, y = 2x
+
+        Returns training, validation and test sets.
+        """
+        randoms = np.random.randint(1, 1000, 100)
+        x = np.array([[x] for x in randoms])
+        y = np.multiply(x, 2)
+
+        ((x_train, y_train), (x_valid, y_valid), (x_test, y_test)) = \
+                ((x[:60], y[:60]), (x[60:80], y[60:80]), (x[80:], y[80:]))
+
         return ((x_train, y_train), (x_valid, y_valid), (x_test, y_test))

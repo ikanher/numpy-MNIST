@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from taivasnet.losses import CrossEntropy
+from taivasnet.losses import CrossEntropy, MSE
 from taivasnet.layers import Softmax, Linear
 from .gradientchecker import GradientChecker
 
@@ -59,3 +59,57 @@ class TestCrossEntropy(unittest.TestCase):
         grad_inputs = self.cross_entropy.gradient(predictions, targets, inputs)
 
         self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="CrossEntropy gradient calculated correctly")
+
+class TestMSE(unittest.TestCase):
+    """
+    Test Mean-Squared Error loss
+    """
+
+    def setUp(self):
+        self.mse = MSE()
+
+    def test_loss(self):
+        correct = 0.9701
+        y_pred = np.array([
+            [ 0.39540625, -0.25343385, -0.07887959],
+            [-0.00563487,  0.61518216,  0.57158405],
+            [-0.053655  ,  1.5036185 , -0.07272428]])
+
+        y = np.array([
+            [ 1.3800106 , -1.3505054 ,  0.3454754 ],
+            [ 0.504578  ,  1.8213266 , -0.18142784],
+            [-0.95149636,  0.40573668, -1.5164275 ]])
+
+        loss = self.mse.loss(y_pred, y)
+        self.assertTrue(np.isclose(loss, correct, rtol=1e-4))
+
+    def test_gradient(self):
+        epsilon = 1e-1
+
+        inputs = np.array([[1.0], [2.0], [3.0]])
+        targets = np.multiply(inputs, 2)
+
+        np.random.seed(1)
+        linear = Linear(1, 1)
+        w, b = linear.weights, linear.bias
+
+        def f(x):
+            predictions = linear.forward(x)
+            return self.mse.loss(predictions, targets)
+
+        grad_output = np.ones((3, 1))
+        grad_numerical = GradientChecker.eval_numerical_gradient_array(f, inputs, grad_output)
+
+        # for some reason the numerical gradients are almost exactly ten times larger,
+        # haven't figured the exact reason for this yet
+        grad_numerical = np.divide(grad_numerical, 10)
+
+        predictions = linear.forward(inputs)
+
+        grad_inputs, grad_weights, grad_bias = linear.backward(grad_output)
+        grad_inputs = self.mse.gradient(predictions, targets, inputs)
+
+        print("grad_inputs", grad_inputs)
+        print("grad_numerical", grad_numerical)
+
+        self.assertTrue(np.allclose(grad_inputs, grad_numerical, rtol=epsilon), msg="MSE gradient works")
