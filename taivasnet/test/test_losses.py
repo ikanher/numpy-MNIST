@@ -91,7 +91,6 @@ class TestMSE(unittest.TestCase):
 
         np.random.seed(1)
         linear = Linear(1, 1)
-        w, b = linear.weights, linear.bias
 
         def f(x):
             predictions = linear.forward(x)
@@ -108,8 +107,5 @@ class TestMSE(unittest.TestCase):
 
         grad_inputs, grad_weights, grad_bias = linear.backward(grad_output)
         grad_inputs = self.mse.gradient(predictions, targets, inputs)
-
-        print("grad_inputs", grad_inputs)
-        print("grad_numerical", grad_numerical)
 
         self.assertTrue(np.allclose(grad_inputs, grad_numerical, rtol=epsilon), msg="MSE gradient works")
