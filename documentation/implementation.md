@@ -1,6 +1,8 @@
 # Implementation
 
-A more general Neural Network was implemented. So it could be used for other datasets than MNIST only.
+A more general Neural Network library, `Taivasnet` was implemented. It can be used for a lot more than just MNIST prediction.
+
+However, as Numpy does not support GPU (Graphics Processing Unit), it's not feasible to train really complex models or huge data sets (working on CPU is really slow compared to GPU). If you want to train a larger model and a GPU, just use other libraries such as [PyTorch](https://pytorch.org/), [Keras](https://keras.io/) or [Tensorflow](https://www.tensorflow.org/).
 
 Code is written in Python and is using [Numpy](http://www.numpy.org/) for matrix operations.
 
@@ -44,7 +46,7 @@ In TwoLayerModel case:
 
 * Input layer has 784 (28x28 images flattened) units
 * First hidden layer has 256 units
-* Second hidden layer has 256 units
+* Second hidden layer has 64 units
 * Output layer has 10 units
 * And what's missing from the image the output layer is connected to _Softmax_ layer which finally gives out 10 probabilities for different classes
 
@@ -52,3 +54,4 @@ However, by passing different attributes to the constructor you can easily chang
 
 Between the layers there are _Dropout_ layers for regularization and _ReLU_ layers for non-linearity.
 
+Loss is calculated using [Cross-Entropy loss](https://en.wikipedia.org/wiki/Cross_entropy) that calculates the error between predicted probabilities and the actual label.
