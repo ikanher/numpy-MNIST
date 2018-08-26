@@ -13,10 +13,10 @@ The program is quite ready now.
 * More about linear regression with MSE
 
 ## What problems did I have?
-* MSE loss function unit checking was not trivial at all. I still probably have a small bug somewhere, as the numerically calculated gradient seems to be exactly ten times as large as the analytical gradient.
+* MSE loss function gradient implementation and unit testing took a lot more time than I had anticipated
 
 ## What next?
 * Hopefully not much. I have only one or two days to do finishing touches if I have missed something relevant.
 
 ## Hours
-* Only around 12 hours this week
+* Only around 15 hours this week

@@ -45,6 +45,8 @@ class CrossEntropy():
 class MSE():
     """
     Mean Squared Error
+
+    https://en.wikipedia.org/wiki/Mean_squared_error
     """
 
     def loss(self, y_pred, y):
@@ -57,5 +59,4 @@ class MSE():
         return np.sum((y_pred - y)**2) / y.size
 
     def gradient(self, y_pred, y, inputs):
-        k = y_pred.shape[0]
-        return (y_pred - y) / y.size
+        return 2*(y_pred - y) / y.size

@@ -22,14 +22,6 @@ The optimizer is tested using integration tests.
 
 The [models.py](../taivasnet/taivasnet/models.py) file which contains the different models to be used is excluded from the unit tests as it only contains definitions of the models with no real logic that would be useful to test.
 
-### Defects in the tests
-
-When testing MSE loss function the numerically evaluated gradients seem to be exactly ten-fold to the analytically calculated gradients.
-
-MSE was one of the last features I added and I'm not sure why this happens. The problem is however worked around by dividing the numerical gradients for MSE loss by then, which seems to give quite correct results.
-
-However, there is a probably a bug in the MSE gradient calculations _or_ in the tests, which would be really nice to get fixed.
-
 ### Running the tests
 
 Tests can be run by using the [pytest](https://docs.pytest.org/en/latest/) command.

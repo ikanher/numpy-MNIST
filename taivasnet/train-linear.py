@@ -12,8 +12,8 @@ from taivasnet.models import LinearModel
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epochs', default=10, type=int, help='Number of training round (10)')
-    parser.add_argument('--lr', default=0.000001, type=float, help='Learning rate (0.000001)')
+    parser.add_argument('--epochs', default=50, type=int, help='Number of training round (50)')
+    parser.add_argument('--lr', default=0.0000001, type=float, help='Learning rate (0.0000001)')
     parser.add_argument('--batch_size', default=256, type=int, help='Mini-batch size (256)')
     parser.add_argument('--load',
                         dest='load_weights',
