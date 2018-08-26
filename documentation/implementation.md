@@ -55,3 +55,14 @@ However, by passing different attributes to the constructor you can easily chang
 Between the layers there are _Dropout_ layers for regularization and _ReLU_ layers for non-linearity.
 
 Loss is calculated using [Cross-Entropy loss](https://en.wikipedia.org/wiki/Cross_entropy) that calculates the error between predicted probabilities and the actual label.
+
+## How to improve
+
+Using the predefined model with two hidden layers one can achieve around 97% accuracy on the MNIST test set.
+
+Model is still quite fast overfitting (the training loss is lot lower than the validation cost). Currently only regularization that is used is `Dropout` layer. By adding another regularization method like [weight decay](https://www.quora.com/How-is-weight-decay-used-for-regularization-in-neural-networks) one should be able to reduce the overfitting a little bit and thus get better results.
+
+Another technique that can be used for speeding up the training (you can use a larger learning rate) that also does some regularization is [Batch normalization](https://arxiv.org/pdf/1502.03167.pdf).
+
+Last, but not least, the way to achieve human level accuracy is to add [Convolutional layers](https://en.wikipedia.org/wiki/Convolutional_neural_network) to the network.
+
