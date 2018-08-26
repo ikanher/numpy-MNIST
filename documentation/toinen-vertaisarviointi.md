@@ -175,6 +175,12 @@ Molemmissa toteuksissa on käytössä _mini-batch_ Stochastic Gradient Descent, 
 
 ## Mitä eroja?
 
+## Mean Squared Error ja lineaarinen regressio
+
+~~Omassa totetuksessani ei ole tukea MSE häviöfunktiolle ja täten lineearista regressiota käyttäville malleille.~~
+
+Inspiroituneena vertaisarvioinnista lisäsin vielä omaan toteutukseeni tuen MSE häviöfunktiolla ja lineaariregressiolle esimerkein.
+
 ### Datan käyttö
 
 Suurimpana erona silmääni osuu, ettei `Neurose` käytä osaa treenaus-datasta validointiin. Neuroverkoissa on erittäin tärkeää, että varsinanen testidata pidetään erillisenä, eikä sitä käytetä mallin tuunaamiseen lainkaan.
