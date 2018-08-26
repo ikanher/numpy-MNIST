@@ -23,7 +23,7 @@ class CrossEntropy():
         predictions = np.diag(y_pred[:, y])
         return -np.mean(np.log(predictions))
 
-    def gradient(self, y_pred, y, inputs):
+    def gradient(self, y_pred, y):
         """
         Cross-Entropy Softmax gradient
 
@@ -58,5 +58,5 @@ class MSE():
         """
         return np.sum((y_pred - y)**2) / y.size
 
-    def gradient(self, y_pred, y, inputs):
+    def gradient(self, y_pred, y):
         return 2*(y_pred - y) / y.size

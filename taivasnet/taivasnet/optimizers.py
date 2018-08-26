@@ -76,7 +76,7 @@ class SGD():
 
                 # calculate the loss
                 loss = self.net.loss(predictions, targets)
-                grad_loss = self.net.loss_gradient(predictions, targets, inputs)
+                grad_loss = self.net.loss_gradient(predictions, targets)
 
                 # backpropagation
                 self.net.backward(grad_loss)

@@ -56,7 +56,7 @@ class TestCrossEntropy(unittest.TestCase):
         grad_inputs_numerical = GradientChecker.eval_numerical_gradient(f, inputs, verbose=False)
 
         predictions = softmax.forward(inputs)
-        grad_inputs = self.cross_entropy.gradient(predictions, targets, inputs)
+        grad_inputs = self.cross_entropy.gradient(predictions, targets)
 
         self.assertTrue(np.allclose(grad_inputs, grad_inputs_numerical, rtol=epsilon), msg="CrossEntropy gradient calculated correctly")
 
@@ -90,6 +90,6 @@ class TestMSE(unittest.TestCase):
         y = np.random.randn(5, 5)
 
         grad_numerical = GradientChecker.eval_numerical_gradient(lambda x: self.mse.loss(y_pred, y), y_pred, verbose=False)
-        grad = self.mse.gradient(y_pred, y, 1)
+        grad = self.mse.gradient(y_pred, y)
 
         self.assertTrue(np.allclose(grad, grad_numerical, rtol=epsilon), msg="MSE gradient works")

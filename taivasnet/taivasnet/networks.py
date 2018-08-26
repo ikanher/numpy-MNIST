@@ -67,7 +67,7 @@ class NeuralNet():
         """
         return self.loss_func.loss(y_pred, y)
 
-    def loss_gradient(self, y_pred, y, inputs):
+    def loss_gradient(self, y_pred, y):
         """
         Calculates the gradient of the loss function
 
@@ -75,7 +75,7 @@ class NeuralNet():
         y - target values
         inputs - inputs to the network
         """
-        return self.loss_func.gradient(y_pred, y, inputs)
+        return self.loss_func.gradient(y_pred, y)
 
     def save_weights(self, filename):
         """
