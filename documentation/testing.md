@@ -2,6 +2,8 @@
 
 The program is tested with unit tests, integration tests, standard Machine Learning testing and usage testing.
 
+Also rather simple performance testing is done, by using PyTorch with the same model and comparing how much faster it is.
+
 ## Unit testing
 
 The individual parts of the program (dataloader, layers, losses) are unit tested.
@@ -152,7 +154,112 @@ Achieving 97% accuracy on the test set, using a relatively simple model, is a cl
 
 ## Usage testing
 
-Last layer of testing is usage testing.
+Usage testing was done by training the network and then using the `predict.py` script for manually checking that the predictions, actuals and the digit in the image all match most of the time.
 
-This was done by training the network and then using the `predict.py` script for manually checking that the predictions, actuals and the digit in the image all match most of the time.
+## Performance testing
+
+Performance testing was done with building the same model in PyTorch and comparing the total training time and the per epoch training time with the PyTorch implementation. You can find the PyTorch implementation in [train-pytorch.py](../taivasnet/train-pytorch.py).
+
+The tests were run for 20 epochs training on the same model with two hidden layers with a learning rate of 0.01.
+
+There seems to be some differences with the implementations as the PyTorch implementations Cross-Entrop Loss seems to go down slower, but it still is achieving the same accuracy as `Taivasnet`. This might be caused by different weight initializations, as PyTorch linear layers use Kaiming initialization per [default](https://github.com/pytorch/pytorch/blob/f9595e756e7dc64d9adb7951a31f5fdc9302cf99/torch/nn/modules/linear.py#L55), but this has not been verified.
+
+### Results
+
+PyTorch implementation seems to be about 3 times faster than `Taivasnet`.
+
+#### PyTorch
+
+```
+$ ./train-pytorch.py --epochs 20 --lr 0.01
+- Training model for 20 epoch, with learning rate 0.01
+Epoch Train loss   Valid loss   Train acc Valid acc Seconds
+0     2.2979941368 2.2972574234 0.1000000 0.2100000 0.731
+1     2.2916886806 2.2885906696 0.2375000 0.2953000 0.686
+2     2.2783343792 2.2722818851 0.3375000 0.3206000 0.689
+3     2.2383646965 2.2314534187 0.3750000 0.3211000 0.690
+4     2.1921966076 2.1740713120 0.3625000 0.3504000 0.692
+5     2.1356282234 2.1085093021 0.5000000 0.4900000 0.683
+6     2.0499556065 2.0014717579 0.5625000 0.5807000 0.697
+7     1.9474045038 1.8874752522 0.6250000 0.6678000 0.696
+8     1.8891603947 1.8198097944 0.6750000 0.7223000 0.689
+9     1.8335344791 1.7839529514 0.7000000 0.7331000 0.707
+10    1.8005335331 1.7629806995 0.7500000 0.7389000 0.689
+11    1.7779119015 1.7493664026 0.7625000 0.7422000 0.692
+12    1.7634522915 1.7400146723 0.7500000 0.7451000 0.691
+13    1.7694919109 1.7331372499 0.7375000 0.7474000 0.698
+14    1.7558568716 1.7276473045 0.7500000 0.7502000 0.687
+15    1.7344713211 1.7228019238 0.7625000 0.7514000 0.723
+16    1.7390391827 1.7154312134 0.7375000 0.7534000 0.740
+17    1.7162208557 1.6587480307 0.8000000 0.8555000 0.702
+18    1.7057301998 1.6351790428 0.8250000 0.8764000 0.693
+19    1.6577457190 1.6182534695 0.8500000 0.8850000 0.691
+Training finished, elapsed 13.967 seconds.
+```
+
+#### Taivasnet
+
+```
+$ ./train.py --epochs 20 --lr 0.01
+- Training model for 20 epoch, with learning rate 0.01
+Epoch Train loss   Valid loss   Train acc Valid acc Seconds
+0     2.3092237741 2.3036022505 0.0875000 0.1090000 2.237
+1     2.3079678992 2.3025862957 0.0875000 0.1090000 2.243
+2     2.3068382376 2.3016553099 0.0875000 0.1090000 2.241
+3     2.3056026544 2.3005883735 0.0875000 0.1090000 2.326
+4     2.3039186396 2.2989414348 0.0875000 0.1064000 2.249
+5     2.3001183619 2.2953626692 0.0875000 0.1064000 2.284
+6     2.2873046920 2.2825129681 0.1500000 0.1768000 2.322
+7     2.1956848531 2.1939921171 0.2250000 0.2132000 2.320
+8     2.0067096963 2.0017281131 0.2875000 0.2752000 2.279
+9     1.7765063907 1.7318688103 0.2750000 0.3273000 2.323
+10    1.5610915693 1.4944205591 0.5250000 0.5663000 2.275
+11    1.1232324118 1.0349665035 0.6125000 0.6847000 2.245
+12    0.9120398191 0.7803212916 0.6875000 0.7645000 2.245
+13    0.7072049266 0.6656845059 0.7375000 0.7964000 2.244
+14    0.6426651315 0.6028505151 0.7750000 0.8203000 2.237
+15    0.6100152388 0.5579867416 0.7875000 0.8357000 2.232
+16    0.5536118204 0.5183368079 0.8625000 0.8514000 2.231
+17    0.5553113016 0.4823236583 0.8250000 0.8632000 2.235
+18    0.4765536575 0.4491651728 0.8750000 0.8729000 2.247
+19    0.4583606095 0.4203754683 0.8625000 0.8811000 2.247
+Training finished, elapsed 45.261 seconds.
+```
+
+### PyTorch with GPU
+
+If you have a graphics processing unit and [CUDA](https://developer.nvidia.com/cuda-zone) configured you can use your GPU(s) to speed up training with PyTorch implementation.
+
+`train-pytorch.py` script can be enabled to use your GPU if you add the `--cuda` switch to it.
+
+This gives another about 3 times performance boost compared to the version running on plain CPU even on a rather slow GTX 1070.
+
+```
+$ ./train-pytorch.py --epochs 20 --lr 0.01 --cuda
+- Training model for 20 epoch, with learning rate 0.01
+Epoch Train loss   Valid loss   Train acc Valid acc Seconds
+0     2.2965421677 2.2949774265 0.1750000 0.2048000 0.356
+1     2.2911725044 2.2853209972 0.2750000 0.3375000 0.249
+2     2.2754766941 2.2659010887 0.4500000 0.4342000 0.249
+3     2.2301423550 2.2109315395 0.4500000 0.3945000 0.249
+4     2.1608028412 2.1270079613 0.4250000 0.4576000 0.247
+5     2.0778498650 2.0386099815 0.4875000 0.4876000 0.248
+6     2.0073313713 1.9593875408 0.5125000 0.5358000 0.248
+7     1.9404588938 1.8876001835 0.5875000 0.6392000 0.247
+8     1.9074304104 1.8499941826 0.6250000 0.6482000 0.248
+9     1.8852983713 1.8087685108 0.6625000 0.7151000 0.248
+10    1.8584964275 1.7804324627 0.6750000 0.7270000 0.248
+11    1.8241693974 1.7631978989 0.6625000 0.7312000 0.249
+12    1.8160998821 1.7517625093 0.7000000 0.7349000 0.248
+13    1.8153194189 1.7437407970 0.6750000 0.7380000 0.248
+14    1.8024564981 1.7379320860 0.7000000 0.7398000 0.250
+15    1.7953819036 1.7332631350 0.6875000 0.7420000 0.257
+16    1.7852455378 1.7295566797 0.7125000 0.7437000 0.261
+17    1.8045421839 1.7265310287 0.6750000 0.7457000 0.256
+18    1.7743860483 1.7239333391 0.7125000 0.7475000 0.257
+19    1.7727273703 1.7215710878 0.7125000 0.7482000 0.252
+Training finished, elapsed 5.115 seconds.
+```
+
+So `Taivasnet` is obviously just a tool for learning and playing around. To really do deep-learning use a framework that supports GPUs.
 
