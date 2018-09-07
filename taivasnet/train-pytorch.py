@@ -4,13 +4,11 @@ Trains a neural neutwork with MNIST data using TwoLayerModel
 """
 
 import argparse
-import torch
 import numpy as np
 import time
+import torch
 
 from torch import nn, optim
-from torchvision import datasets, transforms
-from torch.utils.data.sampler import SubsetRandomSampler
 
 from taivasnet.dataloaders import MNISTDataLoader
 
