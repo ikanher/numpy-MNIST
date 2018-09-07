@@ -6,6 +6,7 @@ __author__ = 'Aki Rehn'
 __project__ = 'taivasnet'
 
 import numpy as np
+import time
 
 class SGD():
     """
@@ -57,11 +58,13 @@ class SGD():
         """
 
         if not suppress_output:
-            fmt = '{:<5} {:12} {:12} {:6} {:6}'
-            print(fmt.format('Epoch', 'Train loss', 'Valid loss', 'Train acc', 'Valid acc'))
+            fmt = '{:<5} {:12} {:12} {:6} {:6} {}'
+            print(fmt.format('Epoch', 'Train loss', 'Valid loss', 'Train acc', 'Valid acc', 'Seconds'))
 
+        train_start = time.time()
         for epoch in range(n_epochs):
 
+            epoch_start = time.time()
             for i in range(0, len(self.x_train), self.batch_size):
 
                 inputs = self.x_train[i:i+self.batch_size]
@@ -105,5 +108,9 @@ class SGD():
             valid_accuracy = np.mean(y_valid_pred.argmax(axis=1) == self.y_valid)
 
             if not suppress_output:
-                fmt = '{:<5} {:03.10f} {:03.10f} {:02.7f} {:02.7f}'
-                print(fmt.format(epoch, loss, loss_valid, accuracy, valid_accuracy))
+                epoch_elapsed = time.time() - epoch_start
+                fmt = '{:<5} {:03.10f} {:03.10f} {:02.7f} {:02.7f} {:05.3f}'
+                print(fmt.format(epoch, loss, loss_valid, accuracy, valid_accuracy, epoch_elapsed))
+
+        train_elapsed = time.time() - train_start
+        print('Training finished, elapsed {:05.3f} seconds.'.format(train_elapsed))
