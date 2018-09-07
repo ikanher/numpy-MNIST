@@ -34,7 +34,6 @@ class CrossEntropy():
 
         y_pred - predictions
         y - target values
-        inputs - not used where
         """
         grad = y_pred.copy()
         k = grad.shape[0]
