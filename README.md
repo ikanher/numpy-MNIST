@@ -2,13 +2,13 @@
 
 This repository is for Laboratory work for the course **Data structures and algorithms** at **University of Helsinki**.
 
-Simple neural network library `Taivasnet` that comes with examples of how to train and predict MNIST data.
+Simple neural network library **Taivasnet** that comes with an example of how to train and predict [MNIST](https://en.wikipedia.org/wiki/MNIST_database) data.
+
+![](documentation/numpy-MNIST.gif)
+
+Project does not use any external deep learning libraries and it depends only on [NumPy](http://www.numpy.org/) (and [Matplotlib](https://matplotlib.org/) for displaying the images).
 
 There's also included an example toy model for using the library for simple linear regression.
-
-## MNIST classification from scratch using a simple Neural Network build with NumPy only
-* [MNIST](https://en.wikipedia.org/wiki/MNIST_database)
-* [NumPy](http://www.numpy.org/)
 
 ## Documentation
 * [Getting started](documentation/getting-started.md)
@@ -16,12 +16,3 @@ There's also included an example toy model for using the library for simple line
 * [Implementation](documentation/implementation.md)
 * [Specification](documentation/specification.md)
 * [Testing](documentation/testing.md)
-
-## Weekly reports
-* [Week 1](documentation/week1-report.md)
-* [Week 2](documentation/week2-report.md)
-* [Week 3](documentation/week3-report.md)
-* [Week 4](documentation/week4-report.md)
-* [Week 5](documentation/week5-report.md)
-* [Week 6](documentation/week6-report.md)
-
